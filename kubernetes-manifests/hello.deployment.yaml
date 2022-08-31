@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: server
-        image: dotnet-hello-world
+        image: aryanmohan/dotnet-argo-demo
         ports:
         - containerPort: 8080
         env:

@@ -4,9 +4,10 @@ metadata:
   generateName: build-container-image-
   labels:
     workflows.argoproj.io/archive-strategy: "false"
+  namespace: argo
 spec:
   entrypoint: build
-  serviceAccountName: workflow
+  serviceAccountName: argo
   volumes:
   - name: kaniko-secret
     secret:
@@ -26,7 +27,7 @@ spec:
         arguments:
           parameters:
           - name: app_repo
-            value: git@github.com:aryanm12/dotnet-argo-demo.git
+            value: git://github.com/aryanm12/dotnet-argo-demo
           - name: container_image
             value: aryanmohan/dotnet-argo-demo
           - name: container_tag

@@ -8,7 +8,7 @@ kind: Service
 metadata:
   name: dotnet-hello-world-external
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: dotnet-hello-world
   ports:
