@@ -31,4 +31,4 @@ spec:
           - name: container_image
             value: aryanmohan/dotnet-argo-demo
           - name: container_tag
-            value: "1.0.0"
+            value: "2.0.0"
