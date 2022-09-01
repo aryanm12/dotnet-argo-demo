@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-world-dotnet-application
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/aryanm12/dotnet-argo-demo
+    targetRevision: HEAD
+    path: kubernetes-manifests
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: dotnet-hello-world
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
