@@ -31,6 +31,8 @@ spec:
           parameters:
           - name: app_repo
             value: git://github.com/aryanm12/dotnet-argo-demo
+          - name: context_sub_path
+            value: src
           - name: container_image
             value: aryanmohan/dotnet-argo-demo
           - name: container_tag
