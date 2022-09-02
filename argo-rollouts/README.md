@@ -49,3 +49,28 @@ Updating a Rollout:
 Update the image version in the kubernetes-manifests/hello.rollouts.service.yaml to "2.0.0"
 
 commit and push the code
+
+Refresh the Argo CD server
+
+Get the rollout status:
+-----------------------
+
+kubectl argo rollouts get rollout dotnet-hello-world-rollouts -n dotnet-hello-world --watch
+
+
+The rollout sets a 20% traffic weight to the canary, and pauses the rollout indefinitely until user action is taken to unpause/promote the rollout.
+
+
+Promoting a Rollout:
+--------------------
+
+kubectl argo rollouts promote dotnet-hello-world-rollouts -n dotnet-hello-world
+
+
+```
+After promotion, Rollout will proceed to execute the remaining steps. The remaining rollout steps in our example are fully automated, so the Rollout will eventually complete steps until it has has fully transitioned to the new version. Watch the rollout again until it has completed all steps:
+
+
+kubectl argo rollouts get rollout rollouts-demo --watch
+
+```
