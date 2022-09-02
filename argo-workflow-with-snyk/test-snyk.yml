@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: build-container-image-
+  labels:
+    workflows.argoproj.io/archive-strategy: "false"
+  namespace: argo
+spec:
+  entrypoint: build
+  serviceAccountName: argo
+  volumes:
+  - name: kaniko-secret
+    secret:
+      secretName: regcred
+      items:
+        - key: .dockerconfigjson
+          path: config.json
+  - name: snyk-vol
+    secret:
+      secretName: snyk-token
+  templates:
+  - name: build
+    dag:
+      tasks:
+      - name: scan
+        template: test-image-snyk
+  - name: test-image-snyk
+    container:
+      image: snyk/snyk:dotnet
+      command: [snyk]
+      args:
+      - container
+      - test
+      - aryanmohan/dotnet-argo-demo:2.0.0
+      env:
+      - name: SNYK_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: snyk-token
+            key: snyktoken
+      volumeMounts:
+      - name: snyk-vol
+        mountPath: "/secret/snyk"

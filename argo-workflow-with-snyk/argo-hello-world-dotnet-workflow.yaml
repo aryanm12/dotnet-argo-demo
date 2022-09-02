@@ -15,6 +15,9 @@ spec:
       items:
         - key: .dockerconfigjson
           path: config.json
+  - name: snyk-vol
+    secret:
+      secretName: snyk-token
   templates:
   - name: build
     dag:
@@ -32,3 +35,23 @@ spec:
             value: aryanmohan/dotnet-argo-demo
           - name: container_tag
             value: "2.0.0"
+      - name: scan
+        template: test-image-snyk
+        depends: "build"
+  - name: test-image-snyk
+    container:
+      image: snyk/snyk:dotnet
+      command: [snyk]
+      args:
+      - container
+      - test
+      - aryanmohan/dotnet-argo-demo:2.0.0
+      env:
+      - name: SNYK_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: snyk-token
+            key: snyktoken
+      volumeMounts:
+      - name: snyk-vol
+        mountPath: "/secret/snyk"

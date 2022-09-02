@@ -1,3 +1,4 @@
 **/src/obj/**
 src/obj/Debug/net7.0/project.razor.json
 src/obj/Debug/net7.0/project.razor.json
+.vscode/settings.json
