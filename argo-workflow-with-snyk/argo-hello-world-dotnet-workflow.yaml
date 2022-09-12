@@ -36,7 +36,7 @@ spec:
           - name: container_image
             value: aryanmohan/dotnet-argo-demo
           - name: container_tag
-            value: "1.0.0"
+            value: "3.0.0"
       - name: scan
         template: test-image-snyk
         depends: "build"
@@ -47,7 +47,7 @@ spec:
       args:
       - container
       - test
-      - aryanmohan/dotnet-argo-demo:1.0.0
+      - aryanmohan/dotnet-argo-demo:3.0.0
       env:
       - name: SNYK_TOKEN
         valueFrom:
